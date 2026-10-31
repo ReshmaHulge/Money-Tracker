@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Upload Expense Excel</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        .upload-container {
+            max-width: 650px;
+            margin: 40px auto;
+        }
+
+        .upload-container .form-card {
+            text-align: center;
+        }
+
+        .upload-container input[type="file"] {
+            margin-top: 20px;
+        }
+
+        .upload-container button {
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="content">
+
+    <!-- Topbar -->
+    <div class="topbar">
+
+        <h1>
+            <i class="fa-solid fa-file-excel"></i>
+            Upload Expense Excel
+        </h1>
+
+        <div class="profile">
+
+            <button type="button" id="themeToggle" class="theme-toggle">
+                <i class="fa-solid fa-moon"></i>
+                <span>Dark Mode</span>
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Upload Form -->
+    <div class="upload-container">
+
+        <div class="form-card">
+
+            <h2>Upload Expense Excel File</h2>
+
+            <form action="/upload"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                <input
+                    type="file"
+                    name="file"
+                    class="form-control"
+                    accept=".xlsx,.xls"
+                    required>
+
+                <button type="submit">
+                    <i class="fa-solid fa-upload"></i>
+                    Upload & Analyze
+                </button>
+
+            </form>
+
+            <br>
+
+            <a href="/" class="history-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Expense Report</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="content">
+
+    <!-- Topbar -->
+    <div class="topbar">
+
+        <h1>
+            <i class="fa-solid fa-chart-line"></i>
+            Expense Report
+        </h1>
+
+        <div class="profile">
+
+            <button type="button" id="themeToggle" class="theme-toggle">
+                <i class="fa-solid fa-moon"></i>
+                <span>Dark Mode</span>
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="dashboard">
+
+        <div class="card income">
+            <i class="fa-solid fa-money-bill-trend-up"></i>
+            <h3>Total Income</h3>
+            <h2>₹ {{ total_income }}</h2>
+        </div>
+
+        <div class="card expense">
+            <i class="fa-solid fa-wallet"></i>
+            <h3>Total Expense</h3>
+            <h2>₹ {{ total_expense }}</h2>
+        </div>
+
+        <div class="card balance">
+            <i class="fa-solid fa-piggy-bank"></i>
+            <h3>Current Balance</h3>
+            <h2>₹ {{ balance }}</h2>
+        </div>
+
+    </div>
+
+    <br><br>
+
+    <!-- Category Wise Expense -->
+    <h2>
+        <i class="fa-solid fa-list"></i>
+        Category Wise Expense
+    </h2>
+
+    {% for category, amount in category_data %}
+
+    <div class="category-box">
+
+        <div class="category-header">
+
+            <span>{{ category }}</span>
+
+            <span>₹ {{ amount }}</span>
+
+        </div>
+
+        <div class="progress">
+
+            <div class="progress-fill"
+                 style="width: {{ (amount/total_expense*100)|round if total_expense else 0 }}%;">
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+    <br>
+
+    <!-- Back Button -->
+    <a href="/" class="history-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Dashboard
+    </a>
+
+</div>
+
+<!-- JavaScript -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

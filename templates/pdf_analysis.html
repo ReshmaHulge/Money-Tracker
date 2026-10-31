@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PDF Expense Analysis</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Google Font -->
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        /* BODY */
+        body {
+            background: #f3efff;
+            font-family: 'Poppins', sans-serif;
+            color: #292044;
+            transition: 0.3s ease;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 30px;
+            border-radius: 18px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 18px rgba(80, 40, 140, 0.15);
+        }
+
+        .header h2 {
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* SUMMARY CARDS */
+        .summary-card {
+            border: none;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 5px 18px rgba(80, 40, 140, 0.10);
+            height: 100%;
+            background: white;
+            color: #292044;
+            transition: 0.3s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 22px rgba(80, 40, 140, 0.16);
+        }
+
+        .summary-card h6 {
+            color: #777;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .summary-card h3 {
+            font-weight: bold;
+            color: #6a11cb;
+            font-size: 28px;
+        }
+
+        /* EXPENSE TABLE BOX */
+        .table-box {
+            background: white;
+            color: #292044;
+            padding: 28px;
+            border-radius: 18px;
+            box-shadow: 0 5px 18px rgba(80, 40, 140, 0.10);
+        }
+
+        .table-box h4 {
+            color: #4527a0;
+            font-weight: bold;
+        }
+
+        /* TABLE HEADER */
+        .table thead th {
+            background: #6a11cb;
+            color: white;
+            padding: 15px;
+            border-color: #d9c8f5;
+        }
+
+        /* TABLE BODY */
+        .table tbody td {
+            padding: 13px;
+            color: #292044;
+            vertical-align: middle;
+        }
+
+        .table tbody tr:hover {
+            background: #f3efff;
+        }
+
+        /* DASHBOARD BUTTON */
+        .btn-dashboard {
+            display: inline-block;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-dashboard:hover {
+            background: #4527a0;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* DARK MODE */
+        body.dark-mode {
+            background: #141b2d;
+            color: #f1f5f9;
+        }
+
+        body.dark-mode .summary-card,
+        body.dark-mode .table-box {
+            background: #1e293b;
+            color: #f1f5f9;
+        }
+
+        body.dark-mode .summary-card h6 {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .summary-card h3 {
+            color: #c4a7ff;
+        }
+
+        body.dark-mode .table-box h4 {
+            color: #c4a7ff;
+        }
+
+        body.dark-mode .table {
+            --bs-table-bg: #1e293b;
+            --bs-table-color: #f1f5f9;
+            --bs-table-border-color: #475569;
+            --bs-table-hover-bg: #334155;
+            --bs-table-hover-color: white;
+        }
+
+        body.dark-mode .table tbody td {
+            color: #f1f5f9;
+        }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+
+            .header {
+                padding: 22px;
+            }
+
+            .header h2 {
+                font-size: 22px;
+            }
+
+            .summary-card {
+                padding: 20px;
+            }
+
+            .summary-card h3 {
+                font-size: 24px;
+            }
+
+            .table-box {
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container py-4">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+
+        <h5>Expense Tracker</h5>
+
+        <div class="profile">
+
+            <button type="button" id="themeToggle" class="theme-toggle">
+                <i class="fa-solid fa-moon"></i>
+                <span>Dark Mode</span>
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <h2>📊 PDF Expense Analysis</h2>
+
+        <p class="mb-0">
+            Your expense report at a glance
+        </p>
+
+    </div>
+
+    <!-- SUMMARY CARDS -->
+    <div class="row g-4 mb-4">
+
+        <!-- TOTAL RECORDS -->
+        <div class="col-md-6 col-lg-3">
+
+            <div class="summary-card">
+
+                <h6>📁 Total Records</h6>
+
+                <h3>{{ total_records }}</h3>
+
+            </div>
+
+        </div>
+
+        <!-- TOTAL EXPENSE -->
+        <div class="col-md-6 col-lg-3">
+
+            <div class="summary-card">
+
+                <h6>💰 Total Expense</h6>
+
+                <h3>₹{{ "%.2f"|format(total_expense) }}</h3>
+
+            </div>
+
+        </div>
+
+        <!-- HIGHEST EXPENSE -->
+        <div class="col-md-6 col-lg-3">
+
+            <div class="summary-card">
+
+                <h6>⬆️ Highest Expense</h6>
+
+                <h3>₹{{ "%.2f"|format(highest_expense) }}</h3>
+
+            </div>
+
+        </div>
+
+        <!-- LOWEST EXPENSE -->
+        <div class="col-md-6 col-lg-3">
+
+            <div class="summary-card">
+
+                <h6>⬇️ Lowest Expense</h6>
+
+                <h3>₹{{ "%.2f"|format(lowest_expense) }}</h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- AVERAGE EXPENSE -->
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <div class="summary-card">
+
+                <h6>📈 Average Expense</h6>
+
+                <h3>₹{{ "%.2f"|format(average_expense) }}</h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- EXPENSE RECORDS TABLE -->
+    <div class="table-box">
+
+        <h4 class="mb-4">
+            🧾 Expense Records
+        </h4>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover table-bordered text-center">
+
+                <thead>
+
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Amount (₹)</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for row in records %}
+
+                    <tr>
+
+                        <td>{{ row.date }}</td>
+
+                        <td>{{ row.category }}</td>
+
+                        <td>₹{{ "%.2f"|format(row.amount) }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- BACK TO DASHBOARD BUTTON -->
+        <a href="/" class="btn-dashboard">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

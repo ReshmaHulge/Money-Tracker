@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Money Tracker - Edit</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .edit-container {
+            max-width: 500px;
+            margin: 30px auto;
+        }
+
+        .edit-container .form-card form {
+            display: block;
+        }
+
+        .edit-container .form-card label {
+            margin-top: 12px;
+        }
+
+        .edit-container .form-card button {
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .edit-back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #6C63FF;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        body.dark-mode .edit-container .form-card {
+            background: #202236;
+            color: #e5e7eb;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="content">
+
+    <!-- Topbar -->
+    <div class="topbar">
+
+        <h1>
+            <i class="fa-solid fa-pen-to-square"></i>
+            Edit Transaction
+        </h1>
+
+        <div class="profile">
+
+            <button type="button" id="themeToggle" class="theme-toggle">
+                <i class="fa-solid fa-moon"></i>
+                <span>Dark Mode</span>
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Edit Form -->
+    <div class="edit-container">
+
+        <div class="form-card">
+
+            <h2>Edit Transaction</h2>
+
+            <form action="/update/{{ expense[0] }}" method="POST">
+
+                <label>Date</label>
+
+                <input type="date" name="date"
+                       value="{{ expense[2] }}" required>
+
+                <label>Type</label>
+
+                <select name="type" required>
+
+                    <option value="Income"
+                        {% if expense[3] == 'Income' %}selected{% endif %}>
+                        Income
+                    </option>
+
+                    <option value="Expense"
+                        {% if expense[3] == 'Expense' %}selected{% endif %}>
+                        Expense
+                    </option>
+
+                </select>
+
+                <label>Category</label>
+
+                <input type="text" name="category"
+                       value="{{ expense[4] }}" required>
+
+                <label>Description</label>
+
+                <input type="text" name="description"
+                       value="{{ expense[5] }}" required>
+
+                <label>Amount (₹)</label>
+
+                <input type="number" name="amount"
+                       value="{{ expense[6] }}"
+                       step="0.01" required>
+
+                <button type="submit">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Update Transaction
+                </button>
+
+            </form>
+
+            <a href="/history" class="edit-back">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to History
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

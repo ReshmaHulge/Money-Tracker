@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Money Tracker - History</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="content">
+
+    <!-- Topbar -->
+    <div class="topbar">
+
+        <h1>Money Tracker History</h1>
+
+        <div class="profile">
+
+            <button type="button" id="themeToggle" class="theme-toggle">
+                <i class="fa-solid fa-moon"></i>
+                <span>Dark Mode</span>
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- History Card -->
+    <div class="history-card">
+
+        <h1>
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            Money Tracker History
+        </h1>
+
+        <!-- History Table -->
+        <table class="history-table">
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Receipt</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for expense in expenses %}
+
+                <tr>
+
+                    <td>{{ expense[0] }}</td>
+                    <td>{{ expense[2] }}</td>
+                    <td>{{ expense[3] }}</td>
+                    <td>{{ expense[4] }}</td>
+                    <td>{{ expense[5] }}</td>
+                    <td>₹ {{ expense[6] }}</td>
+
+                    <td>
+
+                        {% if expense[7] %}
+
+                            <a href="/uploads/{{ expense[7] }}" target="_blank">
+                                View
+                            </a>
+
+                        {% else %}
+
+                            No Receipt
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <a href="/edit/{{ expense[0] }}" class="edit-btn">
+                            Edit
+                        </a>
+
+                        <a href="/delete/{{ expense[0] }}"
+                           class="delete-btn"
+                           onclick="return confirm('Delete this expense?')">
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <br>
+
+        <!-- Back Button -->
+        <a href="/" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

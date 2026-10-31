@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register | Expense Tracker</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        /* Theme Toggle Button */
+        .register-theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: #6C63FF;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .register-theme-toggle:hover {
+            background: #4B3DF5;
+        }
+
+        /* Dark Mode */
+        body.dark-mode.auth-body {
+            background: #141b2d;
+            color: #f1f5f9;
+        }
+
+        body.dark-mode .auth-right {
+            background: #1e293b;
+            color: white;
+        }
+
+        body.dark-mode .auth-right h2,
+        body.dark-mode .auth-right p {
+            color: white;
+        }
+
+        body.dark-mode .input-box input {
+            background: #334155;
+            color: white;
+            border-color: #475569;
+        }
+
+        body.dark-mode .input-box input::placeholder {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .bottom-text a {
+            color: #a78bfa;
+        }
+
+    </style>
+
+</head>
+
+<body class="auth-body">
+
+    <!-- Theme Toggle -->
+    <button type="button"
+            id="themeToggle"
+            class="register-theme-toggle">
+
+        <i class="fa-solid fa-moon"></i>
+        <span>Dark Mode</span>
+
+    </button>
+
+    <div class="auth-container">
+
+        <!-- Left Side -->
+
+        <div class="auth-left">
+
+            <i class="fa-solid fa-wallet"></i>
+
+            <h1>Expense Tracker</h1>
+
+            <p>
+                Create your account and manage your daily expenses professionally.
+            </p>
+
+        </div>
+
+        <!-- Right Side -->
+
+        <div class="auth-right">
+
+            <h2>Create Account</h2>
+
+            <form action="/register" method="POST">
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    <input
+                        type="text"
+                        name="fullname"
+                        placeholder="Full Name"
+                        required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email Address"
+                        required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        required>
+
+                </div>
+
+                <button type="submit" class="auth-btn">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    Register
+
+                </button>
+
+            </form>
+
+            <p class="bottom-text">
+
+                Already have an account?
+
+                <a href="/login">Login</a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
