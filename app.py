@@ -10,7 +10,7 @@ from reportlab.pdfgen import canvas
 
 app = Flask(__name__)
 
-app.secret_key = "my_secret_key_123"
+app.secret_key = os.environ.get("SECRET_KEY", "local-development-only-key")
 
 
 # ---------------- Upload Folder ----------------
